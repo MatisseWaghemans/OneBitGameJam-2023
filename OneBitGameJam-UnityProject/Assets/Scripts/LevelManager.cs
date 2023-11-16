@@ -3,12 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(this);
+        else
+            Instance = this;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+            ReloadLevel();
     }
 
     public void LoadNextLevel()
@@ -19,5 +26,10 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadScene(0);
         else
             SceneManager.LoadScene(activeSceneIndex + 1);
+    }
+
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

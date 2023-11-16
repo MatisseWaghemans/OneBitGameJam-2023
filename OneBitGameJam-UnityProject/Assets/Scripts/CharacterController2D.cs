@@ -3,7 +3,8 @@ using UnityEngine.Events;
 
 public class CharacterController2D : MonoBehaviour
 {
-	[SerializeField] private float _movementspeed = 5f;
+	[SerializeField] private float _movementspeed = 100f;
+	[SerializeField] private SpearBehaviour _spearBehaviour = null;
 	[SerializeField] private bool _canCrouch = true;
 	[SerializeField] private bool _canJump = true;
 	[SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
@@ -37,7 +38,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool _crouch;
 	private bool _jump;
 
-	private void Awake()
+	public virtual void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -51,7 +52,7 @@ public class CharacterController2D : MonoBehaviour
 		_crouch = false;
 	}
 
-    private void Update()
+	public virtual void Update()
     {
 		_horizontalInput = Input.GetAxisRaw("Horizontal");
 
@@ -71,9 +72,22 @@ public class CharacterController2D : MonoBehaviour
         {
 			_jump = true;
         }
+
+		if (_spearBehaviour != null && Input.GetKeyDown(KeyCode.E))
+		{
+			_spearBehaviour.LaunchSpear(m_FacingRight);
+			_spearBehaviour = null;
+		}
 	}
 
-    private void FixedUpdate()
+	public virtual void FixedUpdate()
+	{
+		CheckGrounded();
+
+		Move(_horizontalInput, _crouch, _jump);
+	}
+
+	public void CheckGrounded()
 	{
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
@@ -90,10 +104,7 @@ public class CharacterController2D : MonoBehaviour
 					OnLandEvent.Invoke();
 			}
 		}
-
-		Move(_horizontalInput, _crouch, _jump);
 	}
-
 
 	public void Move(float move, bool crouch, bool jump)
 	{
@@ -103,6 +114,7 @@ public class CharacterController2D : MonoBehaviour
 			// If the character has a ceiling preventing them from standing up, keep them crouching
 			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
 			{
+				Debug.Log("ceiling true");
 				crouch = true;
 			}
 		}
