@@ -354,7 +354,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7x7-Tileset_Dirt_15
+      name: Dirt_Top_Mid-2
       rect:
         serializedVersion: 2
         x: 640
@@ -748,7 +748,6 @@ TextureImporter:
       7x7-Tileset_Dirt_12: 439664296
       7x7-Tileset_Dirt_13: -275131976
       7x7-Tileset_Dirt_14: 1433056980
-      7x7-Tileset_Dirt_15: 77441863
       7x7-Tileset_Dirt_16: -757475987
       7x7-Tileset_Dirt_17: -1511446650
       7x7-Tileset_Dirt_18: -536894981
@@ -780,6 +779,7 @@ TextureImporter:
       7x7-Tileset_Dirt_9: 924240890
       Dirt_Top_LeftCorner: 1062838304
       Dirt_Top_Mid: 1746459918
+      Dirt_Top_Mid-2: 77441863
       Dirt_Top_RightCorner: -1051976019
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
