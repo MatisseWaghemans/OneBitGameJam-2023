@@ -3,9 +3,11 @@ using UnityEngine;
 public class EnemyBehaviour : CharacterController2D
 {
     [SerializeField] private bool _startMovingRight = true;
+    [SerializeField] private float _reloadLevelAfterKillingPlayer = 1f;
 
     private bool _isMovingRight;
     private float _move;
+    private bool _dead;
 
     private void Start()
     {
@@ -31,10 +33,9 @@ public class EnemyBehaviour : CharacterController2D
 
     public void Die()
     {
-        //_move = 0;
-        //this.enabled = false;
-
-        Destroy(this.gameObject);
+        _move = 0;
+        _dead = true;
+        PlayDeadAudioClip();
     }
 
     private void UpdateMoveDirection()
@@ -47,10 +48,19 @@ public class EnemyBehaviour : CharacterController2D
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (_dead)
+            return;
+
         if (collision.collider.CompareTag("Player"))
         {
             if (LevelManager.Instance != null)
-                LevelManager.Instance.ReloadLevel();
+            {
+                if (collision.collider.TryGetComponent(out CharacterController2D controller))
+                    controller.CanMove = false;
+
+                PlayDeadAudioClip();
+                LevelManager.Instance.ReloadLevel(_reloadLevelAfterKillingPlayer);
+            }
             else
                 Debug.LogError("There was no levelmanager in the scene! Add one");
         }

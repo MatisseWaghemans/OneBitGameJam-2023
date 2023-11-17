@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,8 +29,14 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadScene(activeSceneIndex + 1);
     }
 
-    public void ReloadLevel()
+    public void ReloadLevel(float time = 0)
     {
+        StartCoroutine(ReloadWithDelay(time));
+    }
+
+    private IEnumerator ReloadWithDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

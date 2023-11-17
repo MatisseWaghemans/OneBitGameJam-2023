@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
 public class CharacterController2D : MonoBehaviour
 {
+	[Header("General")]
 	[SerializeField] private float _movementspeed = 100f;
 	[SerializeField] private SpearBehaviour _spearBehaviour = null;
 	[SerializeField] private bool _canCrouch = true;
@@ -16,14 +19,21 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
 	[SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
+	[Header("Audio")]
+	[SerializeField] private AudioClip[] _gruntAudioClips = null;
+	[SerializeField] private AudioClip _dieAudioClip = null;
+
 	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+	private AudioSource _audioSource;
 
-	[Header("Events")]
+    public AudioSource AudioSource { get => _audioSource; }
+
+    [Header("Events")]
 	[Space]
 
 	public UnityEvent OnLandEvent;
@@ -37,10 +47,16 @@ public class CharacterController2D : MonoBehaviour
 	private float _horizontalInput;
 	private bool _crouch;
 	private bool _jump;
+	private bool _canMove;
 
-	public virtual void Awake()
+    public bool CanMove { set => _canMove = value; }
+
+    public virtual void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		_audioSource = GetComponent<AudioSource>();
+
+		_canMove = true;
 
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
@@ -54,6 +70,12 @@ public class CharacterController2D : MonoBehaviour
 
 	public virtual void Update()
     {
+		if (_canMove == false)
+		{
+			_horizontalInput = 0;
+			return;
+		}
+
 		_horizontalInput = Input.GetAxisRaw("Horizontal");
 
         if (_canCrouch)
@@ -77,6 +99,8 @@ public class CharacterController2D : MonoBehaviour
 		{
 			_spearBehaviour.LaunchSpear(m_FacingRight);
 			_spearBehaviour = null;
+
+			_audioSource.PlayOneShot(_gruntAudioClips[Random.Range(0, _gruntAudioClips.Length)]);
 		}
 	}
 
@@ -105,6 +129,11 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 	}
+
+	public void PlayDeadAudioClip()
+    {
+		_audioSource.PlayOneShot(_dieAudioClip);
+    }
 
 	public void Move(float move, bool crouch, bool jump)
 	{
@@ -173,6 +202,7 @@ public class CharacterController2D : MonoBehaviour
 		// If the player should jump...
 		if (m_Grounded && jump)
 		{
+			_audioSource.PlayOneShot(_gruntAudioClips[Random.Range(0, _gruntAudioClips.Length)]);
 			// Add a vertical force to the player.
 			m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
