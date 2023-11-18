@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5710246682399509653}
   - component: {fileID: 2680518322923805280}
+  - component: {fileID: 1419033403774420995}
   m_Layer: 0
   m_Name: TEX_Man
   m_TagString: Untagged
@@ -115,6 +116,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1419033403774420995
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502748712903895626}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6b152418aff01bf49a9be818bab791cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6928301999446770437
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementspeed: 200
   _spearBehaviour: {fileID: 7726645877139161267}
-  _canCrouch: 1
+  _canCrouch: 0
   _canJump: 1
   m_JumpForce: 250
   m_CrouchSpeed: 0.36
@@ -216,7 +238,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5685dec8a19877346a074cb2c720f9f2, type: 3}
   - {fileID: 8300000, guid: 2259141ff6e97df419fe08fed650df22, type: 3}
   - {fileID: 8300000, guid: 2c041699ee6727b429c0c846acfcec77, type: 3}
-  _dieAudioClip: {fileID: 8300000, guid: fe6e12a837677884b83e5fe99141fa94, type: 3}
+  _dieAudioClip: {fileID: 8300000, guid: d3c62a66dcfce8843a70f8f4eabe08f3, type: 3}
+  _dieEnemyAudioClip: {fileID: 8300000, guid: d3c62a66dcfce8843a70f8f4eabe08f3, type: 3}
+  _biteAudio: {fileID: 8300000, guid: 555c536d344a322438b349f5b23056d5, type: 3}
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []

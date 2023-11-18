@@ -22,16 +22,21 @@ public class CharacterController2D : MonoBehaviour
 	[Header("Audio")]
 	[SerializeField] private AudioClip[] _gruntAudioClips = null;
 	[SerializeField] private AudioClip _dieAudioClip = null;
+	[SerializeField] private AudioClip _dieEnemyAudioClip = null;
+	[SerializeField] private AudioClip _biteAudio = null;
 
-	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+	const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 	private AudioSource _audioSource;
+	private Animator _animator;
 
     public AudioSource AudioSource { get => _audioSource; }
+    public Rigidbody2D Rigidbody2D { get => m_Rigidbody2D; }
+    public Animator Animator { get => _animator; }
 
     [Header("Events")]
 	[Space]
@@ -48,6 +53,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool _crouch;
 	private bool _jump;
 	private bool _canMove;
+	private bool _isCrouching = false;
 
     public bool CanMove { set => _canMove = value; }
 
@@ -55,6 +61,7 @@ public class CharacterController2D : MonoBehaviour
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		_audioSource = GetComponent<AudioSource>();
+		_animator = GetComponentInChildren<Animator>();
 
 		_canMove = true;
 
@@ -83,13 +90,23 @@ public class CharacterController2D : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.C))
 			{
 				_crouch = true;
+				_isCrouching = true;
 			}
 			else if (Input.GetKeyUp(KeyCode.C))
 			{
 				_crouch = false;
 			}
 		}
-        
+
+		if (!_isCrouching)
+		{
+			_animator.SetBool("Crouch", false);
+		}
+        else if (_isCrouching)
+        {
+			_animator.SetBool("Crouch", true);
+		}
+
 		if (_canJump && Input.GetKeyDown(KeyCode.Space))
         {
 			_jump = true;
@@ -133,7 +150,16 @@ public class CharacterController2D : MonoBehaviour
 	public void PlayDeadAudioClip()
     {
 		_audioSource.PlayOneShot(_dieAudioClip);
+
+		_audioSource.PlayOneShot(_biteAudio);
     }
+
+	public void PlayDeadEnemyAudioClip()
+	{
+		_audioSource.PlayOneShot(_dieEnemyAudioClip);
+
+		_audioSource.PlayOneShot(_biteAudio);
+	}
 
 	public void Move(float move, bool crouch, bool jump)
 	{
@@ -145,6 +171,12 @@ public class CharacterController2D : MonoBehaviour
 			{
 				Debug.Log("ceiling true");
 				crouch = true;
+				_isCrouching = true;
+			}
+            else
+            {
+				Debug.Log("ceiling false");
+				_isCrouching = false;
 			}
 		}
 

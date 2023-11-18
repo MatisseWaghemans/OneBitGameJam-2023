@@ -67,6 +67,8 @@ MonoBehaviour:
   m_CrouchDisableCollider: {fileID: 0}
   _gruntAudioClips: []
   _dieAudioClip: {fileID: 8300000, guid: fe6e12a837677884b83e5fe99141fa94, type: 3}
+  _dieEnemyAudioClip: {fileID: 8300000, guid: d3c62a66dcfce8843a70f8f4eabe08f3, type: 3}
+  _biteAudio: {fileID: 8300000, guid: 555c536d344a322438b349f5b23056d5, type: 3}
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []

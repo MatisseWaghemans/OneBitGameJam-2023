@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class EnemyBehaviour : CharacterController2D
 {
     [SerializeField] private bool _startMovingRight = true;
@@ -9,8 +10,12 @@ public class EnemyBehaviour : CharacterController2D
     private float _move;
     private bool _dead;
 
+    private Collider2D _collider;
+
     private void Start()
     {
+        _collider = GetComponent<Collider2D>();
+
         if (_startMovingRight)
             _isMovingRight = true;
         else
@@ -33,9 +38,13 @@ public class EnemyBehaviour : CharacterController2D
 
     public void Die()
     {
+        Animator.SetBool("Death", true);
+        Rigidbody2D.isKinematic = true;
+        _collider.enabled = false;
+
         _move = 0;
         _dead = true;
-        PlayDeadAudioClip();
+        PlayDeadEnemyAudioClip();
     }
 
     private void UpdateMoveDirection()

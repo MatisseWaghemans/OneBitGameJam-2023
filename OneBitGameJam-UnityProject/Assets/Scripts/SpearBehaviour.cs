@@ -1,14 +1,21 @@
-using System;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class SpearBehaviour : MonoBehaviour
 {
     [SerializeField] private float _movementSpeed = 5f;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private bool _hitOnlyWhenLaunched = true;
+    [SerializeField] private AudioClip _spearImpactAudioClip = null;
 
     private bool _isLaunched = false;
     private Vector3 _move = Vector3.zero;
+    private AudioSource _audioSource = null;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -31,6 +38,8 @@ public class SpearBehaviour : MonoBehaviour
         }
         else if (collision.CompareTag("Obstacle"))
         {
+            _audioSource.PlayOneShot(_spearImpactAudioClip);
+
             _isLaunched = false;
             _collider.isTrigger = false;
 

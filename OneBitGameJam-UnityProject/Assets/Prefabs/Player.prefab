@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5710246682399509653}
+  - component: {fileID: 2066494981547205865}
   - component: {fileID: 2680518322923805280}
   m_Layer: 0
   m_Name: TEX_Man
@@ -63,6 +64,27 @@ Transform:
   m_Father: {fileID: 9209486555574810267}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2066494981547205865
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502748712903895626}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6b152418aff01bf49a9be818bab791cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &2680518322923805280
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -139,7 +161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6928301999446770437}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3125, z: 0}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -215,7 +237,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5685dec8a19877346a074cb2c720f9f2, type: 3}
   - {fileID: 8300000, guid: 2259141ff6e97df419fe08fed650df22, type: 3}
   - {fileID: 8300000, guid: 2c041699ee6727b429c0c846acfcec77, type: 3}
-  _dieAudioClip: {fileID: 8300000, guid: fe6e12a837677884b83e5fe99141fa94, type: 3}
+  _dieAudioClip: {fileID: 8300000, guid: d3c62a66dcfce8843a70f8f4eabe08f3, type: 3}
+  _dieEnemyAudioClip: {fileID: 8300000, guid: d3c62a66dcfce8843a70f8f4eabe08f3, type: 3}
+  _biteAudio: {fileID: 8300000, guid: 555c536d344a322438b349f5b23056d5, type: 3}
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -284,10 +308,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -329,10 +353,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
